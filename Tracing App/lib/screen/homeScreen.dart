@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kid_learn/main.dart';
-import 'package:kid_learn/screen/alphaPractiseScreen.dart';
+// import 'package:kid_learn/main.dart';
+// import 'package:kid_learn/screen/alphaPractiseScreen.dart';
 import 'package:kid_learn/screen/testorpractise.dart';
 
 class HomeScreen extends StatefulWidget {

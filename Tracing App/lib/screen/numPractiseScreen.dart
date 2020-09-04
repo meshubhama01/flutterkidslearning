@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kid_learn/main.dart';
+// import 'package:kid_learn/main.dart';
 
 class NumPractiseScreen extends StatefulWidget {
   static const String id = 'numPractise_screen';
