@@ -7,4 +7,4 @@ This app is made with lots of love and patience. Anyway you can support us is ve
 
 <b>Main screen </b>
 
-<img src="https://github.com/meshubhama01/flutterkidslearning/blob/master/QR.jpeg" width="250" height="500">
+<img src="https://github.com/meshubhama01/flutterkidslearning/blob/master/QR.jpeg" width="500" height="500">
