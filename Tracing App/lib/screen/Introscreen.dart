@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kid_learn/main.dart';
+// import 'package:kid_learn/main.dart';
 import 'package:kid_learn/screen/homeScreen.dart';
 import 'package:splashscreen/splashscreen.dart';
 
