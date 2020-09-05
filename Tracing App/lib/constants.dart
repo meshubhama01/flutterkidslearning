@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-const double kCanvasSize = 200.0;
+const double kCanvasSize = 400.0;
 const double kStrokeWidth = 12.0;
 const Color kBlackBrushColor = Colors.black;
 const bool kIsAntiAlias = true;
 const int kModelInputSize = 28;
-const double kCanvasInnerOffset = 40.0;
+const double kCanvasInnerOffset = 80.0;
 const Color kBrushBlack = Colors.black;
 const Color kBrushWhite = Colors.white;
 
