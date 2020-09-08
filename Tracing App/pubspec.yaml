@@ -33,6 +33,7 @@ dependencies:
   tflite: ^1.0.4
   image: ^2.1.7 
   rflutter_alert: ^1.0.3
+  
 
   
 
@@ -51,8 +52,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/labels.txt
-    - assets/converted_mnist_model.tflite
+    - assets/mnist.txt
+    - assets/mnist.tflite
+    - assets/splash_bg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
