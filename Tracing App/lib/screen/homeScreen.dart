@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kid_learn/screen/nav_drawer_view.dart';
 // import 'package:kid_learn/main.dart';
 // import 'package:kid_learn/screen/alphaPractiseScreen.dart';
 import 'package:kid_learn/screen/testorpractise.dart';
@@ -15,7 +16,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[300],
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.amberAccent,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      endDrawer: DrawerWidget(),
+      backgroundColor: Colors.amberAccent,
       body: Container(
         child: SafeArea(
           child: Center(
@@ -30,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   "LET'S LEARN",
                   style: GoogleFonts.permanentMarker(
                     textStyle: TextStyle(
-                        fontSize: 42, color: Colors.blue[700], letterSpacing: .5),
+                        fontSize: 42,
+                        color: Colors.blue[700],
+                        letterSpacing: .5),
                   ),
                 ),
                 SizedBox(
