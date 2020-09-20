@@ -26,5 +26,3 @@ class Kidlearn extends StatelessWidget {
     );
   }
 }
-
-#changes
