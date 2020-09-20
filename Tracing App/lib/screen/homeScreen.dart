@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:kid_learn/main.dart';
 // import 'package:kid_learn/screen/alphaPractiseScreen.dart';
 import 'package:kid_learn/screen/testorpractise.dart';
@@ -14,33 +15,109 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.yellow[300],
       body: Container(
         child: SafeArea(
           child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                FlatButton(
-                  child: Text("ALPHABETS"),
-                  color: Colors.white,
-                  onPressed: () {
-                    HomeScreen.alpha = true;
-                    setState(() {
-                      Navigator.pushNamed(context, TestorPractise.id);
-                    });
-                  },
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
                 ),
-                FlatButton(
-                  child: Text("Numbers"),
-                  color: Colors.white,
-                  onPressed: () {
-                    HomeScreen.alpha = false;
-                    setState(() {
-                      Navigator.pushNamed(context, TestorPractise.id);
-                    });
-                  },
+                Text(
+                  "LET'S LEARN",
+                  style: GoogleFonts.permanentMarker(
+                    textStyle: TextStyle(
+                        fontSize: 42, color: Colors.blue[700], letterSpacing: .5),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22.0)),
+                      color: Colors.red,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            //border: Border.all(),
+                            borderRadius: BorderRadius.circular(22.0)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Image.asset("assets/abc.png"),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.20,
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Image.asset("assets/forward.png"),
+                            ),
+                            Container(),
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        HomeScreen.alpha = true;
+                        setState(() {
+                          Navigator.pushNamed(context, TestorPractise.id);
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22.0)),
+                      color: Colors.green,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            //border: Border.all(),
+                            borderRadius: BorderRadius.circular(22.0)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Image.asset("assets/123.png"),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.20,
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Image.asset("assets/forward.png"),
+                            ),
+                            Container(),
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        HomeScreen.alpha = false;
+                        setState(() {
+                          Navigator.pushNamed(context, TestorPractise.id);
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
