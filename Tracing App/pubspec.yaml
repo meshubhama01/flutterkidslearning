@@ -54,6 +54,8 @@ flutter:
   assets:
     - assets/mnist.txt
     - assets/mnist.tflite
+    - assets/alpha.tflite
+    - assets/alpha.txt
     - assets/splash_bg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
