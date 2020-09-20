@@ -33,6 +33,8 @@ dependencies:
   tflite: ^1.0.4
   image: ^2.1.7 
   rflutter_alert: ^1.0.3
+  google_fonts: ^1.1.0
+
   
 
   
@@ -57,6 +59,13 @@ flutter:
     - assets/alpha.tflite
     - assets/alpha.txt
     - assets/splash_bg.png
+    - assets/bunny_head.jpeg
+    - assets/lion_head.jpeg
+    - assets/abc.png
+    - assets/123.png
+    - assets/forward.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
