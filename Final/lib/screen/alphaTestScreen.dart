@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:kid_learn/main.dart';
 import 'prediction_widget_alpha.dart';
 import 'package:kid_learn/Models/predictions.dart';
 import 'package:kid_learn/drawing_painter.dart';

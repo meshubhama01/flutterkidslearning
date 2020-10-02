@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:kid_learn/main.dart';
+
 
 testPopup(BuildContext dialogContext) {
   var alertStyle = AlertStyle(
