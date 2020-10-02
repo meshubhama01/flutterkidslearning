@@ -1,7 +1,7 @@
-import 'dart:typed_data';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'prediction_widget.dart';
+import '../alert.dart';
 import 'package:kid_learn/Models/predictions.dart';
 import 'package:kid_learn/drawing_painter.dart';
 import 'package:kid_learn/recognizer.dart';
@@ -16,45 +16,69 @@ class NumTestScreen extends StatefulWidget {
 class _NumTestScreenState extends State<NumTestScreen> {
   final _points = List<Offset>();
   final _recognizer = Recognizer();
-  List<Prediction> _prediction;
+  List<Prediction> _prediction = [];
   bool initialize = false;
+  Random _rand = Random();
+  int _randNumber = 0;
+  List numbersLUT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   @override
   void initState() {
     super.initState();
     _initModel();
+    setState(() {
+      _randNumber = _rand.nextInt(10);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Digit Recognizer'),
+        backgroundColor: Colors.orange[600],
+        title: Text('Numbers Test'),
       ),
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'test kr rha hoon',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'image on right',
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              _mnistPreviewImage(),
-            ],
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Column(
+          //           children: <Widget>[
+          //             Text(
+          //               'test kr rha hoon',
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.bold,
+          //               ),
+          //             ),
+          //             Text(
+          //               'image on right',
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     _mnistPreviewImage(),
+          //   ],
+          // ),
+          SizedBox(
+            height: 25,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 18.0),
+            child: Text(
+              ' Write :-       " ${numbersLUT[_randNumber]} "',
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28),
+            ),
+          ),
+          SizedBox(
+            height: 25,
           ),
           SizedBox(
             height: 10,
@@ -63,19 +87,87 @@ class _NumTestScreenState extends State<NumTestScreen> {
           SizedBox(
             height: 10,
           ),
-          PredictionWidget(
-            predictions: _prediction,
+          Container(
+            padding: EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.replay),
+                  onPressed: () {
+                    if (_prediction != null) {
+                      _prediction.clear();
+                    }
+                    if (_points != null) {
+                      _points.clear();
+                    }
+                    _randNumber = _rand.nextInt(10);
+
+                    setState(() {});
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    try {
+                      if (_prediction != null) {
+                        _prediction.clear();
+                      }
+                      if (_points != null) {
+                        _points.clear();
+                      }
+                    } catch (e) {
+                      print("error : $e");
+                    }
+                    setState(() {});
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward_ios),
+                  onPressed: () async {
+                    var predList = await _recognize();
+                    if (predList[0]['label'] == numbersLUT[_randNumber] &&
+                        predList[0]['confidence'] > 0.50) {
+                      var p = await testPopup(context, "Well Done !", 'next');
+                      if (p == true) {
+                        setState(() {
+                          if (_prediction != null) {
+                            _prediction.clear();
+                          }
+                          if (_points != null) {
+                            _points.clear();
+                          }
+                        });
+                      } else if (p == false) {
+                        if (_prediction != null) {
+                          _prediction.clear();
+                        }
+                        if (_points != null) {
+                          _points.clear();
+                        }
+                        setState(() {
+                          _randNumber = _rand.nextInt(10);
+                        });
+                      }
+                    } else {
+                      var p = await testPopup(context, "Try Again!", 'redo');
+                      if (p == true) {
+                        setState(() {
+                          if (_prediction != null) {
+                            _prediction.clear();
+                          }
+                          if (_points != null) {
+                            _points.clear();
+                          }
+                        });
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.clear),
-        onPressed: () {
-          setState(() {
-            _points.clear();
-            _prediction.clear();
-          });
-        },
       ),
     );
   }
@@ -113,41 +205,43 @@ class _NumTestScreenState extends State<NumTestScreen> {
     );
   }
 
-  Widget _mnistPreviewImage() {
-    return Container(
-      width: 100,
-      height: 100,
-      color: Colors.black,
-      child: FutureBuilder(
-        future: _previewImage(),
-        builder: (BuildContext _, snapshot) {
-          if (snapshot.hasData) {
-            return Image.memory(
-              snapshot.data,
-              fit: BoxFit.fill,
-            );
-          } else {
-            return Center(
-              child: Text('Error'),
-            );
-          }
-        },
-      ),
-    );
-  }
+  // Widget _mnistPreviewImage() {
+  //   return Container(
+  //     width: 100,
+  //     height: 100,
+  //     color: Colors.black,
+  //     child: FutureBuilder(
+  //       future: _previewImage(),
+  //       builder: (BuildContext _, snapshot) {
+  //         if (snapshot.hasData) {
+  //           return Image.memory(
+  //             snapshot.data,
+  //             fit: BoxFit.fill,
+  //           );
+  //         } else {
+  //           return Center(
+  //             child: Text('Error'),
+  //           );
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
   void _initModel() async {
     var res = await _recognizer.loadModel();
+    print(" model inited : $res");
   }
 
-  Future<Uint8List> _previewImage() async {
-    return await _recognizer.previewImage(_points);
-  }
+  // Future<Uint8List> _previewImage() async {
+  //   return await _recognizer.previewImage(_points);
+  // }
 
-  void _recognize() async {
+  _recognize() async {
     List<dynamic> pred = await _recognizer.recognize(_points);
-    setState(() {
-      _prediction = pred.map((json) => Prediction.fromJson(json)).toList();
-    });
+    // setState(() {
+    //   _prediction = pred.map((json) => Prediction.fromJson(json)).toList();
+    // });
+    return pred;
   }
 }
