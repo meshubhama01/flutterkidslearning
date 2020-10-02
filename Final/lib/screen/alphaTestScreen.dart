@@ -64,47 +64,27 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amberAccent,
       appBar: AppBar(
         backgroundColor: Colors.orange[600],
         title: Text('Alphabets Test'),
       ),
       body: Column(
         children: <Widget>[
-          // Row(
-          //   children: <Widget>[
-          //     Expanded(
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Column(
-          //           children: <Widget>[
-          //             Text(
-          //               'test kr rha hoon',
-          //               style: TextStyle(
-          //                 fontWeight: FontWeight.bold,
-          //               ),
-          //             ),
-          //             Text(
-          //               'image on right',
-          //             )
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //     _mnistPreviewImage(),
-          //   ],
-          // ),
           SizedBox(
             height: 25,
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 18.0),
-            child: Text(
-              ' Write :-       " ${alphabetsLUT[_randAlpha]} "',
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28),
+          Expanded(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 40.0),
+              child: Text(
+                ' Write :-       " ${alphabetsLUT[_randAlpha]} "',
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32),
+              ),
             ),
           ),
           SizedBox(
@@ -117,64 +97,92 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
           // PredictionWidget(
           //   predictions: _prediction,
           // ),
-          Container(
-            padding: EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.replay),
-                  onPressed: () {
-                    _points.clear();
-                    _randAlpha = _rand.nextInt(25);
-                    _prediction.clear();
-
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    try {
-                      _points.clear();
-                      _prediction.clear();
-                    } catch (e) {
-                      print("error : $e");
-                    }
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                  onPressed: () async {
-                    var predList = await _recognize();
-                    if (predList[0]['label'] == alphabetsLUT[_randAlpha] &&
-                        predList[0]['confidence'] > 0.50) {
-                      var p = await testPopup(context, "Well Done !", 'next');
-                      if (p == true) {
-                        setState(() {
-                          _points.clear();
-                          _prediction.clear();
-                        });
-                      } else if (p == false) {
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.12),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.yellow[300],
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(22.0)),
+                padding: EdgeInsets.only(
+                    top: 10.0, right: 10.0, left: 10.0, bottom: 20.0),
+                margin: EdgeInsets.only(right: 45.0),
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.replay,
+                        color: Colors.black54,
+                        size: 45.0,
+                      ),
+                      onPressed: () {
                         _points.clear();
+                        _randAlpha = _rand.nextInt(25);
                         _prediction.clear();
-                        setState(() {
-                          _randAlpha = _rand.nextInt(25);
-                        });
-                      }
-                    } else {
-                      var p = await testPopup(context, "Try Again!", 'redo');
-                      if (p == true) {
-                        setState(() {
+
+                        setState(() {});
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        size: 48.0,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        try {
                           _points.clear();
                           _prediction.clear();
-                        });
-                      }
-                    }
-                  },
+                        } catch (e) {
+                          print("error : $e");
+                        }
+                        setState(() {});
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.green,
+                        size: 45.0,
+                      ),
+                      onPressed: () async {
+                        var predList = await _recognize();
+                        if (predList[0]['label'] == alphabetsLUT[_randAlpha] &&
+                            predList[0]['confidence'] > 0.50) {
+                          var p =
+                              await testPopup(context, "Well Done !", 'next');
+                          if (p == true) {
+                            setState(() {
+                              _points.clear();
+                              _prediction.clear();
+                            });
+                          } else if (p == false) {
+                            _points.clear();
+                            _prediction.clear();
+                            setState(() {
+                              _randAlpha = _rand.nextInt(25);
+                            });
+                          }
+                        } else {
+                          var p =
+                              await testPopup(context, "Try Again!", 'redo');
+                          if (p == true) {
+                            setState(() {
+                              _points.clear();
+                              _prediction.clear();
+                            });
+                          }
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
