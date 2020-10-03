@@ -1,6 +1,7 @@
 // import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 // import 'prediction_widget_alpha.dart';
 import 'package:kid_learn/Models/predictions.dart';
 import 'package:kid_learn/drawing_painter.dart';
@@ -17,6 +18,8 @@ class AlphaTestScreen extends StatefulWidget {
 }
 
 class _AlphaTestScreenState extends State<AlphaTestScreen> {
+  FlutterTts flutterTts = FlutterTts();
+
   final _points = List<Offset>();
   final _recognizer = Recognizer();
   List<Prediction> _prediction;
@@ -52,13 +55,26 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
     'Z'
   ];
 
+  setLanguage() async {
+    await flutterTts.setLanguage("en-IN");
+    await flutterTts.setSpeechRate(1.0);
+  }
+
+  speak(String character) async {
+    var result = await flutterTts.speak("Write, $character");
+    print(result);
+  }
+
   @override
   void initState() {
     super.initState();
+
     _initModel();
-    setState(() {
-      _randAlpha = _rand.nextInt(26);
-    });
+    setLanguage();
+    _randAlpha = _rand.nextInt(26);
+    speak(alphabetsLUT[_randAlpha]);
+
+    setState(() {});
   }
 
   @override
@@ -120,12 +136,18 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
                         color: Colors.black54,
                         size: 45.0,
                       ),
-                      onPressed: () {
-                        _points.clear();
-                        _randAlpha = _rand.nextInt(25);
-                        _prediction.clear();
+                      onPressed: () async {
+                        if (_points != null) {
+                          _points.clear();
+                        }
 
-                        setState(() {});
+                        if (_prediction != null) {
+                          _prediction.clear();
+                        }
+                        setState(() {
+                          _randAlpha = _rand.nextInt(25);
+                        });
+                        await speak(alphabetsLUT[_randAlpha]);
                       },
                     ),
                     IconButton(

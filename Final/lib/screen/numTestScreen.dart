@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import '../alert.dart';
 import 'package:kid_learn/Models/predictions.dart';
 import 'package:kid_learn/drawing_painter.dart';
@@ -21,14 +22,25 @@ class _NumTestScreenState extends State<NumTestScreen> {
   Random _rand = Random();
   int _randNumber = 0;
   List numbersLUT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  FlutterTts flutterTts = FlutterTts();
+  setLanguage() async {
+    await flutterTts.setLanguage("en-IN");
+    await flutterTts.setSpeechRate(1.0);
+  }
+
+  speak(String character) async {
+    var result = await flutterTts.speak("Write, $character");
+    print(result);
+  }
 
   @override
   void initState() {
     super.initState();
     _initModel();
-    setState(() {
-      _randNumber = _rand.nextInt(10);
-    });
+    setLanguage();
+    _randNumber = _rand.nextInt(10);
+    speak(numbersLUT[_randNumber]);
+    setState(() {});
   }
 
   @override
@@ -98,7 +110,7 @@ class _NumTestScreenState extends State<NumTestScreen> {
                           _points.clear();
                         }
                         _randNumber = _rand.nextInt(10);
-
+                        speak(numbersLUT[_randNumber]);
                         setState(() {});
                       },
                     ),

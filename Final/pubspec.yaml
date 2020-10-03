@@ -35,6 +35,7 @@ dependencies:
   rflutter_alert: ^1.0.3
   google_fonts: ^1.1.0
   whiteboardkit: ^0.2.2
+  flutter_tts: ^1.2.7
 
   
 
