@@ -1,5 +1,6 @@
 // import 'dart:typed_data';
 
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 // import 'prediction_widget_alpha.dart';
@@ -65,6 +66,8 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
     print(result);
   }
 
+  AudioCache audioPlayer;
+
   @override
   void initState() {
     super.initState();
@@ -73,7 +76,7 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
     setLanguage();
     _randAlpha = _rand.nextInt(26);
     speak(alphabetsLUT[_randAlpha]);
-
+    audioPlayer = AudioCache();
     setState(() {});
   }
 
@@ -176,19 +179,26 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
                         var predList = await _recognize();
                         if (predList[0]['label'] == alphabetsLUT[_randAlpha] &&
                             predList[0]['confidence'] > 0.50) {
+                          audioPlayer.play('success.mp3');
+
                           var p =
                               await testPopup(context, "Well Done !", 'next');
+
                           if (p == true) {
                             setState(() {
+                              audioPlayer.clear('success.mp3');
                               _points.clear();
                               _prediction.clear();
                             });
+                            speak(alphabetsLUT[_randAlpha]);
                           } else if (p == false) {
                             _points.clear();
                             _prediction.clear();
+                            audioPlayer.clear('success.mp3');
                             setState(() {
                               _randAlpha = _rand.nextInt(25);
                             });
+                            speak(alphabetsLUT[_randAlpha]);
                           }
                         } else {
                           var p =

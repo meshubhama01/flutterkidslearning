@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:kid_learn/main.dart';
@@ -14,6 +15,19 @@ class TestorPractise extends StatefulWidget {
 }
 
 class _TestorPractiseState extends State<TestorPractise> {
+  AudioCache audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioCache();
+  }
+
+  playLocal() async {
+    var result = await audioPlayer.play('button3.mp3');
+    print("result = $result");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,16 +79,14 @@ class _TestorPractiseState extends State<TestorPractise> {
                       ],
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (HomeScreen.alpha == true) {
-                      setState(() {
-                        Navigator.pushNamed(context, AlphaPractiseScreen.id);
-                      });
+                      await playLocal();
+                      Navigator.pushNamed(context, AlphaPractiseScreen.id);
                     }
                     if (HomeScreen.alpha == false) {
-                      setState(() {
-                        Navigator.pushNamed(context, NumPractiseScreen.id);
-                      });
+                      await playLocal();
+                      Navigator.pushNamed(context, NumPractiseScreen.id);
                     }
                   },
                 ),
@@ -116,16 +128,14 @@ class _TestorPractiseState extends State<TestorPractise> {
                       ],
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (HomeScreen.alpha == true) {
-                      setState(() {
-                        Navigator.pushNamed(context, AlphaTestScreen.id);
-                      });
+                      await playLocal();
+                      Navigator.pushNamed(context, AlphaTestScreen.id);
                     }
                     if (HomeScreen.alpha == false) {
-                      setState(() {
-                        Navigator.pushNamed(context, NumTestScreen.id);
-                      });
+                      await playLocal();
+                      Navigator.pushNamed(context, NumTestScreen.id);
                     }
                   },
                 ),

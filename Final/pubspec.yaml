@@ -36,6 +36,7 @@ dependencies:
   google_fonts: ^1.1.0
   whiteboardkit: ^0.2.2
   flutter_tts: ^1.2.7
+  audioplayers: ^0.16.1
 
   
 
@@ -66,6 +67,9 @@ flutter:
     - assets/abc.png
     - assets/123.png
     - assets/forward.png
+    - assets/success.mp3
+    - assets/button3.mp3
+    - assets/fail.mp3
 
 
 

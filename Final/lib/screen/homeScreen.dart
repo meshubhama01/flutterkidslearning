@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kid_learn/screen/nav_drawer_view.dart';
@@ -13,6 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AudioCache audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioCache();
+  }
+
+  playLocal() async {
+    var result = await audioPlayer.play('button3.mp3');
+    print("result = $result");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         HomeScreen.alpha = true;
-                        setState(() {
-                          Navigator.pushNamed(context, TestorPractise.id);
-                        });
+                        await playLocal();
+                        Navigator.pushNamed(context, TestorPractise.id);
                       },
                     ),
                     SizedBox(
@@ -119,11 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         HomeScreen.alpha = false;
-                        setState(() {
-                          Navigator.pushNamed(context, TestorPractise.id);
-                        });
+                        await playLocal();
+                        Navigator.pushNamed(context, TestorPractise.id);
                       },
                     ),
                   ],
