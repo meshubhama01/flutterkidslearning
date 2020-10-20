@@ -1,5 +1,8 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+AudioCache audioPlayer = AudioCache();
 
 testPopup(BuildContext dialogContext, String info1, String info2) {
   var alertStyle = AlertStyle(
@@ -17,7 +20,8 @@ testPopup(BuildContext dialogContext, String info1, String info2) {
         "Retry",
         style: TextStyle(color: Colors.white, fontSize: 18),
       ),
-      onPressed: () {
+      onPressed: () async {
+        await audioPlayer.play('button3.mp3');
         Navigator.pop(dialogContext, true);
       },
       color: Colors.black54,
@@ -27,7 +31,8 @@ testPopup(BuildContext dialogContext, String info1, String info2) {
         "Next",
         style: TextStyle(color: Colors.white, fontSize: 18),
       ),
-      onPressed: () {
+      onPressed: () async {
+        await audioPlayer.play('button3.mp3');
         Navigator.pop(dialogContext, false);
       },
       color: Colors.black54,
@@ -40,7 +45,8 @@ testPopup(BuildContext dialogContext, String info1, String info2) {
         "Retry",
         style: TextStyle(color: Colors.white, fontSize: 18),
       ),
-      onPressed: () {
+      onPressed: () async {
+        await audioPlayer.play('button3.mp3');
         Navigator.pop(dialogContext, true);
       },
       color: Colors.black54,

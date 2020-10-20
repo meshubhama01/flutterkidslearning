@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:whiteboardkit/whiteboardkit.dart';
 // import 'package:kid_learn/main.dart';
@@ -34,7 +35,7 @@ List alphabetsLUT = [
 ];
 
 int _cursor = 0;
-
+AudioCache audioPlayer;
 Random rand = Random();
 
 class AlphaPractiseScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _AlphaPractiseScreenState extends State<AlphaPractiseScreen> {
   @override
   void initState() {
     controller = new DrawingController();
-
+    audioPlayer = AudioCache();
     _cursor = rand.nextInt(26);
     super.initState();
   }
@@ -141,7 +142,8 @@ class _AlphaPractiseScreenState extends State<AlphaPractiseScreen> {
                 ),
                 RaisedButton(
                   color: Color(0xFF6f4e37),
-                  onPressed: () {
+                  onPressed: () async {
+                    await audioPlayer.play('button3.mp3');
                     setState(() {
                       _cursor = rand.nextInt(26);
                       controller.wipe();
