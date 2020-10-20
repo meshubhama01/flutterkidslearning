@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import '../alert.dart';
@@ -23,6 +24,8 @@ class _NumTestScreenState extends State<NumTestScreen> {
   int _randNumber = 0;
   List numbersLUT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   FlutterTts flutterTts = FlutterTts();
+  AudioCache audioPlayer;
+
   setLanguage() async {
     await flutterTts.setLanguage("en-IN");
     await flutterTts.setSpeechRate(1.0);
@@ -40,6 +43,7 @@ class _NumTestScreenState extends State<NumTestScreen> {
     setLanguage();
     _randNumber = _rand.nextInt(10);
     speak(numbersLUT[_randNumber]);
+    audioPlayer = AudioCache();
     setState(() {});
   }
 
@@ -102,7 +106,8 @@ class _NumTestScreenState extends State<NumTestScreen> {
                         color: Colors.black54,
                         size: 45.0,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        await audioPlayer.play('button3.mp3');
                         if (_prediction != null) {
                           _prediction.clear();
                         }
@@ -110,8 +115,9 @@ class _NumTestScreenState extends State<NumTestScreen> {
                           _points.clear();
                         }
                         _randNumber = _rand.nextInt(10);
-                        speak(numbersLUT[_randNumber]);
+
                         setState(() {});
+                        await speak(numbersLUT[_randNumber]);
                       },
                     ),
                     IconButton(
@@ -120,7 +126,8 @@ class _NumTestScreenState extends State<NumTestScreen> {
                         size: 48.0,
                         color: Colors.red,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        await audioPlayer.play('button3.mp3');
                         try {
                           if (_prediction != null) {
                             _prediction.clear();
@@ -141,9 +148,12 @@ class _NumTestScreenState extends State<NumTestScreen> {
                         size: 45.0,
                       ),
                       onPressed: () async {
+                        await audioPlayer.play('button3.mp3');
                         var predList = await _recognize();
                         if (predList[0]['label'] == numbersLUT[_randNumber] &&
                             predList[0]['confidence'] > 0.50) {
+                          audioPlayer.play('success.mp3');
+
                           var p =
                               await testPopup(context, "Well Done !", 'next');
                           if (p == true) {
@@ -155,6 +165,8 @@ class _NumTestScreenState extends State<NumTestScreen> {
                                 _points.clear();
                               }
                             });
+                            await Future.delayed(Duration(seconds: 1));
+                            await speak(numbersLUT[_randNumber]);
                           } else if (p == false) {
                             if (_prediction != null) {
                               _prediction.clear();
@@ -165,8 +177,11 @@ class _NumTestScreenState extends State<NumTestScreen> {
                             setState(() {
                               _randNumber = _rand.nextInt(10);
                             });
+                            await Future.delayed(Duration(seconds: 1));
+                            await speak(numbersLUT[_randNumber]);
                           }
                         } else {
+                          audioPlayer.play('fail.mp3');
                           var p =
                               await testPopup(context, "Try Again!", 'redo');
                           if (p == true) {
@@ -178,6 +193,8 @@ class _NumTestScreenState extends State<NumTestScreen> {
                                 _points.clear();
                               }
                             });
+                            await Future.delayed(Duration(milliseconds: 500));
+                            await speak(numbersLUT[_randNumber]);
                           }
                         }
                       },

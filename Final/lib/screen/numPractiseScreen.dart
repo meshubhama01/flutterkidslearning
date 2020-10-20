@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:whiteboardkit/whiteboardkit.dart';
 // import 'package:kid_learn/main.dart';
@@ -7,7 +8,7 @@ import 'package:whiteboardkit/whiteboardkit.dart';
 List numbersLUT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 int _cursor = 0;
-
+AudioCache audioPlayer;
 Random rand = Random();
 
 class NumPractiseScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _NumPractiseScreenState extends State<NumPractiseScreen> {
   @override
   void initState() {
     controller = new DrawingController();
-
+    audioPlayer = AudioCache();
     _cursor = rand.nextInt(10);
     super.initState();
   }
@@ -114,7 +115,8 @@ class _NumPractiseScreenState extends State<NumPractiseScreen> {
                 ),
                 RaisedButton(
                   color: Color(0xFF6f4e37),
-                  onPressed: () {
+                  onPressed: () async {
+                    await audioPlayer.play('button3.mp3');
                     setState(() {
                       _cursor = rand.nextInt(10);
                       controller.wipe();
