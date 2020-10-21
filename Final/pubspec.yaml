@@ -37,6 +37,7 @@ dependencies:
   whiteboardkit: ^0.2.2
   flutter_tts: ^1.2.7
   audioplayers: ^0.16.1
+  lottie: ^0.6.0
 
   
 
@@ -70,6 +71,8 @@ flutter:
     - assets/success.mp3
     - assets/button3.mp3
     - assets/fail.mp3
+    - assets/rocket.json
+    - assets/loading2.json
 
 
 

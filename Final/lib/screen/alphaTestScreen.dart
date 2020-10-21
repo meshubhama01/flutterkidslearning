@@ -160,7 +160,7 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
                         size: 48.0,
                         color: Colors.red,
                       ),
-                      onPressed: () async{
+                      onPressed: () async {
                         await audioPlayer.play('button3.mp3');
                         try {
                           _points.clear();
@@ -171,56 +171,61 @@ class _AlphaTestScreenState extends State<AlphaTestScreen> {
                         setState(() {});
                       },
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.green,
-                        size: 45.0,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(),
+                            borderRadius: BorderRadius.circular(18.0)),
+                        elevation: 0.8,
+                        color: Colors.yellow[300],
+                        child: Text(
+                          "Check",
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                        onPressed: () async {
+                          await audioPlayer.play('button3.mp3');
+                          var predList = await _recognize();
+                          if (predList[0]['label'] ==
+                                  alphabetsLUT[_randAlpha] &&
+                              predList[0]['confidence'] > 0.50) {
+                            audioPlayer.play('success.mp3');
+
+                            var p =
+                                await testPopup(context, "Well Done !", 'next');
+
+                            if (p == true) {
+                              setState(() {
+                                _points.clear();
+                                _prediction.clear();
+                              });
+                              await Future.delayed(Duration(seconds: 1));
+                              speak(alphabetsLUT[_randAlpha]);
+                            } else if (p == false) {
+                              _points.clear();
+                              _prediction.clear();
+
+                              setState(() {
+                                _randAlpha = _rand.nextInt(25);
+                              });
+                              await Future.delayed(Duration(seconds: 1));
+                              speak(alphabetsLUT[_randAlpha]);
+                            }
+                          } else {
+                            audioPlayer.play('fail.mp3');
+                            var p =
+                                await testPopup(context, "Try Again!", 'redo');
+                            if (p == true) {
+                              await Future.delayed(Duration(milliseconds: 500));
+                              setState(() {
+                                _points.clear();
+                                _prediction.clear();
+                              });
+                              speak(alphabetsLUT[_randAlpha]);
+                            }
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        await audioPlayer.play('button3.mp3');
-                        var predList = await _recognize();
-                        if (predList[0]['label'] == alphabetsLUT[_randAlpha] &&
-                            predList[0]['confidence'] > 0.50) {
-                          audioPlayer.play('success.mp3');
-
-                          var p =
-                              await testPopup(context, "Well Done !", 'next');
-
-                          if (p == true) {
-                            setState(() {
-                              _points.clear();
-                              _prediction.clear();
-                            });
-                            await Future.delayed(
-                                Duration(seconds: 1));
-                            speak(alphabetsLUT[_randAlpha]);
-                          } else if (p == false) {
-                            _points.clear();
-                            _prediction.clear();
-
-                            setState(() {
-                              _randAlpha = _rand.nextInt(25);
-                            });
-                            await Future.delayed(
-                                Duration(seconds: 1));
-                            speak(alphabetsLUT[_randAlpha]);
-                          }
-                        } else {
-                          audioPlayer.play('fail.mp3');
-                          var p =
-                              await testPopup(context, "Try Again!", 'redo');
-                          if (p == true) {
-                            await Future.delayed(
-                                Duration(milliseconds: 500));
-                            setState(() {
-                              _points.clear();
-                              _prediction.clear();
-                            });
-                            speak(alphabetsLUT[_randAlpha]);
-                          }
-                        }
-                      },
                     ),
                   ],
                 ),

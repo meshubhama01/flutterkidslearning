@@ -141,11 +141,15 @@ class _NumTestScreenState extends State<NumTestScreen> {
                         setState(() {});
                       },
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.green,
-                        size: 45.0,
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(),
+                          borderRadius: BorderRadius.circular(18.0)),
+                      elevation: 0.8,
+                      color: Colors.yellow[300],
+                      child: Text(
+                        "Check",
+                        style: TextStyle(fontSize: 20.0),
                       ),
                       onPressed: () async {
                         await audioPlayer.play('button3.mp3');
